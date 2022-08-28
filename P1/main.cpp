@@ -9,7 +9,7 @@
 // Shaders
 #include "Shader.h"
 
-void resize(GLFWwindow* window, int width, int height);
+void resize(GLFWwindow *window, int width, int height);
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
@@ -27,8 +27,7 @@ int main() {
     glfwSetFramebufferSizeCallback(window, resize);
 
     //Verificación de errores de creacion  ventana
-    if (window== NULL)
-    {
+    if (window == NULL) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
 
@@ -57,21 +56,32 @@ int main() {
 
     // Set up vertex data (and buffer(s)) and attribute pointers
     float vertices[] = {
-            0.5f,  0.5f, 0.0f,    1.0f,0.0f,0.0f,  // A
-            0.5f, -0.5f, 0.0f,    0.0f,1.0f,0.0f,  // B
-            -0.5f, -0.5f, 0.0f,   0.0f,0.0f,1.0f,  // C
-            -0.5f,  0.5f, 0.0f,   1.0f,1.0f,1.0f, //  D
+            -0.8f, 0.2f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.2f, 0.2f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, 0.8f, 0.0f, 0.0f, 0.0f, 1.0f,
 
+            0.2f, 0.2f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.8f, 0.2f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.65f, 0.8f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.35f, 0.8f, 0.0f, 0.0f, 1.0f, 0.0f,
+
+            -0.5f, -0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.21f, -0.4f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.32f, -0.74f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.68f, -0.74f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.79f, -0.4f, 0.0f, 1.0f, 0.0f, 0.0f,
+
+            0.2f, -0.3f, 0.0f, 0.41f, 0.05f, 0.67f,
+            0.8f, -0.3f, 0.0f, 0.41f, 0.05f, 0.67f,
+            0.8f, -0.7f, 0.0f, 0.41f, 0.05f, 0.67f,
+            0.2f, -0.7f, 0.0f, 0.41f, 0.05f, 0.67f
     };
     unsigned int indices[] = {  // note that we start from 0!
-            0,2,1,// second Triangle
-            0,1,3,
-            1,2,3
-
+            // 0,2,1
     };
 
 
-    GLuint VBO, VAO,EBO;
+    GLuint VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -89,11 +99,11 @@ int main() {
     // 4. Despues colocamos las caracteristicas de los vertices
 
     //Posicion
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *) 0);
     glEnableVertexAttribArray(0);
 
     //Color
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)(3*sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *) (3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -103,8 +113,7 @@ int main() {
 
 
 
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // Checa si un eveneto ha sido activado y manda a llamar al callback correspondiente
         glfwPollEvents();
 
@@ -118,13 +127,12 @@ int main() {
         OurShader.Use();
         glBindVertexArray(VAO);
         glPointSize(20);
-        // GL_TRIANGLES (INICIO, ELEMENTOS TOTALES), GL_LINES, GL_LINE_LOOP
-        // lleno, vacio, lleno, vacio, dibujar en cuatro partes, cambiar colores
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
-        // glDrawArrays(GL_POINTS, 0, 4);
-        // MODO FIBUJO, ELEMENTOS TOTALES, _, CORRIMIENTO
+        //glDrawElements(GL_TRIANGLES,3, GL_UNSIGNED_INT, (GLvoid*)(3*sizeof(GLfloat)));
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_LINE_LOOP, 3, 4);
+        glDrawArrays(GL_LINE_LOOP, 7, 5);
+        glDrawArrays(GL_TRIANGLE_FAN, 12, 4);
 
-        //glDrawElements(GL_TRIANGLES,6, GL_UNSIGNED_INT, (GLvoid*)(3*sizeof(GLfloat)));
 
         glBindVertexArray(0);
 
@@ -133,13 +141,11 @@ int main() {
     }
 
 
-
     glfwTerminate();
     return EXIT_SUCCESS;
 }
 
-void resize(GLFWwindow* window, int width, int height)
-{
+void resize(GLFWwindow *window, int width, int height) {
     // Set the Viewport to the size of the created window
     glViewport(0, 0, width, height);
     //glViewport(0, 0, screenWidth, screenHeight);
