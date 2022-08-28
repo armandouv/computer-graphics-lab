@@ -50,7 +50,7 @@ int main() {
     std::cout << "> Renderer: " << glGetString(GL_RENDERER) << std::endl;
     std::cout << "> SL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
-    std::string base_path{"/home/armandouv/Documents/Projects/computer-graphics-lab/P1/Shader/"};
+    std::string base_path{"/home/armandouv/Documents/Projects/computer-graphics-lab/P1/ejercicio/Shader/"};
     Shader OurShader(base_path + "core.vs", base_path + "core.frag");
 
 
