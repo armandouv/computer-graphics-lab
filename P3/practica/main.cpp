@@ -312,7 +312,7 @@ int main() {
 
         // Cola
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(0.875f, 0.7f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.875f, 0.69f, 0.0f));
         model = glm::scale(model, glm::vec3(0.25f, 0.125f, 0.5f));
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 36);
