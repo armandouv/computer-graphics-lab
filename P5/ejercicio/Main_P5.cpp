@@ -42,6 +42,8 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
+float rot = 0.0f;
+bool is_opening = false, is_closing = false;
 
 int main() {
     // Init GLFW
@@ -108,6 +110,9 @@ int main() {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        if (is_opening && rot > -90.0f) rot -= 2.0f;
+        else if (is_closing && rot < 0.0f) rot += 2.0f;
+
         // Check and call events
         glfwPollEvents();
         DoMovement();
@@ -124,8 +129,12 @@ int main() {
 
         // Draw the loaded model
         glm::mat4 model(1);
+        model = glm::rotate(model, glm::radians(rot), glm::vec3(1.0f, 0.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         poke_arriba.Draw(shader);
+
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         poke_abajo.Draw(shader);
 
         // Swap the buffers
@@ -173,7 +182,15 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
         }
     }
 
-
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+        if (rot == -90.0f || is_opening) {
+            is_closing = true;
+            is_opening = false;
+        } else if (rot == 0.0f || is_closing) {
+            is_closing = false;
+            is_opening = true;
+        }
+    }
 }
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos) {
