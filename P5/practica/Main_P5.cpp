@@ -92,6 +92,7 @@ int main() {
     // Setup and compile our shaders
     Shader shader("Shaders/modelLoading.vs", "Shaders/modelLoading.frag");
 
+    Model table((char *) "Models/Table/table.obj");
     // Load models
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT, 0.1f,
                                             100.0f);
@@ -121,7 +122,9 @@ int main() {
 
         // Draw the loaded model
         glm::mat4 model(1);
+        model = glm::translate(model, glm::vec3(0.0f, -0.8f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        table.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers(window);
