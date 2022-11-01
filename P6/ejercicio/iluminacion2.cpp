@@ -528,7 +528,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
         active = !active;
         if (active) {
             Light1 = glm::vec3(1.0f, 0.0f, 1.0f);
-            Light2 = glm::vec3(0.0f, 0.0f, 1.0f);
+            Light2 = glm::vec3(0.0f, 1.0f, 1.0f);
             Light3 = glm::vec3(0.0f, 1.0f, 0.0f);
             Light4 = glm::vec3(1.0f, 1.0f, 0.0f);
         } else {
