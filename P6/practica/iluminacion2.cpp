@@ -42,7 +42,7 @@ GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 bool firstMouse = true;
 // Light attributes
-glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
+glm::vec3 lightPos(0.0f, 4.0f, 0.0f);
 glm::vec3 lightDir(0.0f, 0.0f, 0.0f);
 bool active;
 
